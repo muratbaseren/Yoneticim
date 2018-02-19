@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="YoneticimDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Daireler">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="No" Type="int" Nullable="false" />
+    <Property Name="Kat" Type="tinyint" />
+    <Property Name="SahibiAdi" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="SahibiSoyadi" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="SahibiTel" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="KiraciAdi" Type="nvarchar" MaxLength="25" />
+    <Property Name="KiraciSoyadi" Type="nvarchar" MaxLength="25" />
+    <Property Name="KiraciTel" Type="nvarchar" MaxLength="15" />
+    <Property Name="MulkId" Type="int" Nullable="false" />
+    <Property Name="EPosta" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sifre" Type="nvarchar" MaxLength="16" />
+  </EntityType>
+  <EntityType Name="Gorevliler">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adi" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="Soyadi" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="IsTanimi" Type="nvarchar" MaxLength="400" />
+    <Property Name="Maasi" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="TcNo" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="SigortaNo" Type="char" MaxLength="16" Nullable="false" />
+    <Property Name="MulkId" Type="int" Nullable="false" />
+    <Property Name="GorevliTurId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GorevliTurleri">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adi" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kalemler">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MulkId" Type="int" Nullable="false" />
+    <Property Name="GelirMi" Type="bit" Nullable="false" />
+    <Property Name="Tutar" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Açıklama" Type="nvarchar" MaxLength="300" />
+    <Property Name="Yıl" Type="int" Nullable="false" />
+    <Property Name="Ay" Type="int" Nullable="false" />
+    <Property Name="GorevliId" Type="int" />
+    <Property Name="AidatMi" Type="bit" Nullable="false" />
+    <Property Name="DaireId" Type="int" />
+  </EntityType>
+  <EntityType Name="Mulkler">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="250" />
+    <Property Name="Adi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MulkId" Type="int" />
+    <Property Name="BlokSayisi" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Yoneticiler">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Soyad" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="EPosta" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Sifre" Type="nvarchar" MaxLength="16" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Daireler_Mulkler">
+    <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="1" />
+    <End Role="Daireler" Type="Self.Daireler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mulkler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Daireler">
+        <PropertyRef Name="MulkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Gorevliler_GorevliTurleri">
+    <End Role="GorevliTurleri" Type="Self.GorevliTurleri" Multiplicity="1" />
+    <End Role="Gorevliler" Type="Self.Gorevliler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GorevliTurleri">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Gorevliler">
+        <PropertyRef Name="GorevliTurId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Gorevliler_Mulkler">
+    <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="1" />
+    <End Role="Gorevliler" Type="Self.Gorevliler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mulkler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Gorevliler">
+        <PropertyRef Name="MulkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kalemler_Daireler">
+    <End Role="Daireler" Type="Self.Daireler" Multiplicity="0..1" />
+    <End Role="Kalemler" Type="Self.Kalemler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Daireler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kalemler">
+        <PropertyRef Name="DaireId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kalemler_Gorevliler">
+    <End Role="Gorevliler" Type="Self.Gorevliler" Multiplicity="0..1" />
+    <End Role="Kalemler" Type="Self.Kalemler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gorevliler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kalemler">
+        <PropertyRef Name="GorevliId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kalemler_Mulkler">
+    <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="1" />
+    <End Role="Kalemler" Type="Self.Kalemler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mulkler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kalemler">
+        <PropertyRef Name="MulkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Mulkler_Mulkler">
+    <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="0..1" />
+    <End Role="Mulkler1" Type="Self.Mulkler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mulkler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Mulkler1">
+        <PropertyRef Name="MulkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="YoneticimDBModelStoreContainer">
+    <EntitySet Name="Daireler" EntityType="Self.Daireler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gorevliler" EntityType="Self.Gorevliler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GorevliTurleri" EntityType="Self.GorevliTurleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kalemler" EntityType="Self.Kalemler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mulkler" EntityType="Self.Mulkler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yoneticiler" EntityType="Self.Yoneticiler" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Daireler_Mulkler" Association="Self.FK_Daireler_Mulkler">
+      <End Role="Mulkler" EntitySet="Mulkler" />
+      <End Role="Daireler" EntitySet="Daireler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Gorevliler_GorevliTurleri" Association="Self.FK_Gorevliler_GorevliTurleri">
+      <End Role="GorevliTurleri" EntitySet="GorevliTurleri" />
+      <End Role="Gorevliler" EntitySet="Gorevliler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Gorevliler_Mulkler" Association="Self.FK_Gorevliler_Mulkler">
+      <End Role="Mulkler" EntitySet="Mulkler" />
+      <End Role="Gorevliler" EntitySet="Gorevliler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kalemler_Daireler" Association="Self.FK_Kalemler_Daireler">
+      <End Role="Daireler" EntitySet="Daireler" />
+      <End Role="Kalemler" EntitySet="Kalemler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kalemler_Gorevliler" Association="Self.FK_Kalemler_Gorevliler">
+      <End Role="Gorevliler" EntitySet="Gorevliler" />
+      <End Role="Kalemler" EntitySet="Kalemler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kalemler_Mulkler" Association="Self.FK_Kalemler_Mulkler">
+      <End Role="Mulkler" EntitySet="Mulkler" />
+      <End Role="Kalemler" EntitySet="Kalemler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Mulkler_Mulkler" Association="Self.FK_Mulkler_Mulkler">
+      <End Role="Mulkler" EntitySet="Mulkler" />
+      <End Role="Mulkler1" EntitySet="Mulkler" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

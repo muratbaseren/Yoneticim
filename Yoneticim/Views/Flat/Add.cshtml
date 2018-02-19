@@ -1,0 +1,84 @@
+﻿@model Daire
+@{
+    ViewBag.Title = "Daire Ekle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Daire Ekle</h2>
+<hr />
+
+@using (Html.BeginForm("Add", "Flat", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("mulkid", Request.QueryString["mulkid"].ToString())
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.No, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.No, new { @class = "form-control", placeholder = "Daire No", type = "number" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Kat, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.Kat, new { @class = "form-control", placeholder = "Kat No", type = "number" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.SahibiAdi, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.SahibiAdi, new { @class = "form-control", placeholder = "Sahibi Adı" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.SahibiSoyadi, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.SahibiSoyadi, new { @class = "form-control", placeholder = "Sahibi Soyadı" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.SahibiTel, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.SahibiTel, new { @class = "form-control", placeholder = "Sahibi Telefon" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.KiraciAdi, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.KiraciAdi, new { @class = "form-control", placeholder = "Kiracı Adı" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.KiraciSoyadi, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.KiraciSoyadi, new { @class = "form-control", placeholder = "Kiracı Soyadı" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.KiraciTel, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.KiraciTel, new { @class = "form-control", placeholder = "Kiracı Telefon" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.EPosta, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.EPosta, new { @class = "form-control", placeholder = "E-Posta", type="email" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Sifre, new { @class = "control-label col-xs-2" })
+        <div class="col-xs-5">
+            @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control", placeholder = "Şifre" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="submit" class="btn btn-primary">Daire Ekle</button>
+            <a href="/Block/Details/@Request.QueryString["mulkid"].ToString()" class="btn btn-default">İptal</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,105 @@
+﻿@import "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css";
+@import "http://fonts.googleapis.com/css?family=Roboto:400,500";
+
+.box > .icon {
+    text-align: center;
+    position: relative;
+}
+
+    .box > .icon > .image {
+        position: relative;
+        z-index: 2;
+        margin: auto;
+        width: 88px;
+        height: 88px;
+        border: 8px solid white;
+        line-height: 88px;
+        border-radius: 50%;
+        background: #63B76C;
+        vertical-align: middle;
+    }
+
+    .box > .icon:hover > .image {
+        background: #333;
+    }
+
+    .box > .icon > .image > i {
+        font-size: 36px !important;
+        color: #fff !important;
+        transition:all 0.5s;
+    }
+
+    .box > .icon:hover > .image > i {
+        color: white !important;
+        transform: rotate(360deg) scaleX(1.5) scaleY(1.5) scaleZ(1.5);
+    }
+
+    .box > .icon > .info {
+        margin-top: -24px;
+        background: rgba(0, 0, 0, 0.04);
+        border: 4px solid #666;
+        box-shadow: 2px 2px 5px #666;
+        border-radius: 10px;
+        padding: 15px 0 10px 0;
+        /*transition:all 1s;*/
+    }
+    .box > .icon:hover > .info {
+        background: rgba(99, 183, 108, 0.20);
+        border-color: #333;
+        color: #63B76C;
+        /*transform:rotateY(deg);*/
+    }
+
+    .box > .icon:hover > .info.red {
+        background: rgba(255, 93, 93, 0.20);
+        border-color: #333;
+        color: rgb(255, 93, 93);
+    }
+
+    .box > .icon > .info > h3.title {
+        font-family: "Robot",sans-serif !important;
+        font-size: 16px;
+        color: #222;
+        font-weight: 700;
+    }
+
+    .box > .icon > .info > p {
+        font-family: "Robot",sans-serif !important;
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5em;
+        margin: 20px;
+    }
+
+    .box > .icon:hover > .info > h3.title, .box > .icon:hover > .info > p, .box > .icon:hover > .info > .more > a {
+        color: #222;
+    }
+
+    .box > .icon > .info > .more a {
+        font-family: "Robot",sans-serif !important;
+        font-size: 12px;
+        color: #222;
+        line-height: 12px;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+    .box > .icon:hover > .info > .more > a {
+        color: #fff;
+        padding: 6px 8px;
+        background-color: #63B76C;
+    }
+
+    .box > .icon:hover > .info.red > .more > a {
+        color: #fff;
+        padding: 6px 8px;
+        background-color: rgb(255, 93, 93);
+    }
+
+.box .space {
+    height: 30px;
+}
+
+.box > .icon > .image.red {
+    background-color: rgb(255, 93, 93);
+}

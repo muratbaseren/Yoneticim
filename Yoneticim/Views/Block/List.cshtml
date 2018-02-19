@@ -1,0 +1,244 @@
+﻿@model List<Mulk>
+@{
+    ViewBag.Title = "List Blocks";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section newmenu
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-plus"></span> Yeni <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a data-title="modalNewBlock" data-toggle="modal" data-target="#modalNewBlock">Bina</a></li>
+        </ul>
+    </li>
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <h3><b>Binalar</b></h3>
+            <hr />
+            <div class="table-responsive col-md-12">
+
+                @Html.Grid(Model).Columns(col =>
+           {
+               col.Add(x => x.Id, true);
+               col.Add(x => x.Adi).Titled("Bina Adı");
+               col.Add().RenderValueAs(x => x.Daireler.Count.ToString()).Titled("Daire Sayısı");
+               col.Add().RenderValueAs(x => x.Gorevliler.Count.ToString()).Titled("Görevli Sayısı");
+               col.Add(x => x.Adres).Titled("Adres");
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Details", "Details", new { id = x.Id }, new { @class = "btn btn-info btn-sm" }));
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Edit", "Edit", null, new { @class = "btn btn-warning btn-sm", data_toggle = "modal", data_target = "#edit", data_uri = Url.Action("Edit", "Block", new { id = x.Id }), data_block_id = x.Id, href = string.Empty }));
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Del", "Delete", null, new { @class = "btn btn-danger btn-sm", data_toggle = "modal", data_target = "#delete", data_uri = Url.Action("Delete", "Block", new { id = x.Id }), data_block_id = x.Id, href = string.Empty }));
+
+           }).WithPaging(5).SetLanguage("tr").Sortable(true).EmptyText("Kayıtlı bina bulunmamaktadır.")
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalNewBlock" tabindex="-1" role="dialog" aria-labelledby="modalNewBlock" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Add New Block</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="BlockName" class="control-label col-xs-4">Bina Adı</label>
+                            <div class="col-xs-8">
+                                <input type="text" class="form-control" id="BlockName" placeholder="Bina Adı">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Address" class="control-label col-xs-4">Adres</label>
+                            <div class="col-xs-8">
+                                <input type="text" class="form-control" id="Address" placeholder="Adres">
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer ">
+                    <button id="btnAddBlock" type="button" class="btn btn-success btn-lg" data-dismiss="modal" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <input id="edit_id" type="hidden" value="" />
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Bina Adı</label>
+                            <div class="col-md-8">
+                                <input id="BlockName_edit" class="form-control" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Adres</label>
+                            <div class="col-md-8">
+                                <input id="Address_edit" class="form-control" type="text">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" id="btnSaveBlock" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?
+                    </div>
+
+                    <form id="deleteBlockForm" action="/Block/Delete" method="post">
+                        <input id="BlockId" name="BlockId" type="hidden" />
+                    </form>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-success" onclick="btnDeleteBlock_Click();">
+                        <span class="glyphicon glyphicon-ok-sign"></span> Yes
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div>
+
+<script>
+
+    $(function () {
+
+        $('#edit').on('show.bs.modal', function (e) {
+            var link = e.relatedTarget;
+            var uri = $(link).data("uri");
+
+            $.ajax({
+                url: uri,
+                method: "GET"
+            }).done(function (result) {
+                $("#BlockName_edit").val(result.Adi);
+                $("#Address_edit").val(result.Adres);
+                $("#edit_id").val(result.Id);
+            });
+
+        });
+
+        $("#btnSaveBlock").click(function () {
+
+            var adi = $("#BlockName_edit").val();
+            var adres = $("#Address_edit").val();
+            var id = $("#edit_id").val();
+
+            var obj = {
+                "Id": id,
+                "Adi": adi,
+                "Adres": adres
+            };
+
+            $.ajax({
+                url: "/Block/Edit/" + id,
+                method: "POST",
+                data: obj,
+                dataType: "json"
+            }).done(function (result) {
+
+                if (result.hasError !== undefined) {
+                    if (result.hasError === true) {
+                        alert(result.message);
+                    }
+                }
+
+                location.reload();
+
+            });
+
+        });
+
+        $("#btnAddBlock").click(function () {
+
+            var blockName = $("#BlockName").val();
+            var address = $("#Address").val();
+
+            var obj = {
+                "Adi": blockName,
+                "Adres": address
+            };
+
+            $.ajax({
+                url: "/Block/Add",
+                method: "POST",
+                data: obj,
+                dataType: "json"
+            }).done(function (result) {
+
+                if (result.hasError !== undefined) {
+                    if (result.hasError === true) {
+                        alert(result.message);
+                    }
+                }
+
+                location.reload();
+
+            });
+
+        });
+
+        $("#delete").on("shown.bs.modal", function (e) {
+            var btn = $(e.relatedTarget);
+            var blockId = btn.data("block-id");
+
+            $("#delete").find("#BlockId").val(blockId);
+        });
+
+    });
+
+    function btnDeleteBlock_Click() {
+        $("#deleteBlockForm").submit();
+    }
+
+</script>

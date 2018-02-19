@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="YoneticimDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Daireler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="No" Type="int" Nullable="false" />
+          <Property Name="Kat" Type="tinyint" />
+          <Property Name="SahibiAdi" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="SahibiSoyadi" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="SahibiTel" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="KiraciAdi" Type="nvarchar" MaxLength="25" />
+          <Property Name="KiraciSoyadi" Type="nvarchar" MaxLength="25" />
+          <Property Name="KiraciTel" Type="nvarchar" MaxLength="15" />
+          <Property Name="MulkId" Type="int" Nullable="false" />
+          <Property Name="EPosta" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Gorevliler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Soyadi" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="IsTanimi" Type="nvarchar" MaxLength="400" />
+          <Property Name="Maasi" Type="decimal" Precision="7" Scale="2" />
+          <Property Name="TcNo" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="SigortaNo" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="MulkId" Type="int" Nullable="false" />
+          <Property Name="GorevliTurId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GorevliTurleri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kalemler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MulkId" Type="int" Nullable="false" />
+          <Property Name="GelirMi" Type="bit" Nullable="false" />
+          <Property Name="Tutar" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Açıklama" Type="nvarchar" MaxLength="300" />
+          <Property Name="Yıl" Type="int" Nullable="false" />
+          <Property Name="Ay" Type="int" Nullable="false" />
+          <Property Name="GorevliId" Type="int" />
+          <Property Name="AidatMi" Type="bit" Nullable="false" />
+          <Property Name="DaireId" Type="int" />
+        </EntityType>
+        <EntityType Name="Mulkler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="250" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MulkId" Type="int" />
+          <Property Name="BlokSayisi" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Yoneticiler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EPosta" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Daireler_Mulkler">
+          <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="1" />
+          <End Role="Daireler" Type="Self.Daireler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Daireler">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gorevliler_GorevliTurleri">
+          <End Role="GorevliTurleri" Type="Self.GorevliTurleri" Multiplicity="1" />
+          <End Role="Gorevliler" Type="Self.Gorevliler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GorevliTurleri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Gorevliler">
+              <PropertyRef Name="GorevliTurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gorevliler_Mulkler">
+          <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="1" />
+          <End Role="Gorevliler" Type="Self.Gorevliler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Gorevliler">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kalemler_Daireler">
+          <End Role="Daireler" Type="Self.Daireler" Multiplicity="0..1" />
+          <End Role="Kalemler" Type="Self.Kalemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Daireler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kalemler">
+              <PropertyRef Name="DaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kalemler_Gorevliler">
+          <End Role="Gorevliler" Type="Self.Gorevliler" Multiplicity="0..1" />
+          <End Role="Kalemler" Type="Self.Kalemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gorevliler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kalemler">
+              <PropertyRef Name="GorevliId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kalemler_Mulkler">
+          <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="1" />
+          <End Role="Kalemler" Type="Self.Kalemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kalemler">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mulkler_Mulkler">
+          <End Role="Mulkler" Type="Self.Mulkler" Multiplicity="0..1" />
+          <End Role="Mulkler1" Type="Self.Mulkler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mulkler1">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="YoneticimDBModelStoreContainer">
+          <EntitySet Name="Daireler" EntityType="Self.Daireler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gorevliler" EntityType="Self.Gorevliler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GorevliTurleri" EntityType="Self.GorevliTurleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kalemler" EntityType="Self.Kalemler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mulkler" EntityType="Self.Mulkler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yoneticiler" EntityType="Self.Yoneticiler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Daireler_Mulkler" Association="Self.FK_Daireler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulkler" />
+            <End Role="Daireler" EntitySet="Daireler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gorevliler_GorevliTurleri" Association="Self.FK_Gorevliler_GorevliTurleri">
+            <End Role="GorevliTurleri" EntitySet="GorevliTurleri" />
+            <End Role="Gorevliler" EntitySet="Gorevliler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gorevliler_Mulkler" Association="Self.FK_Gorevliler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulkler" />
+            <End Role="Gorevliler" EntitySet="Gorevliler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kalemler_Daireler" Association="Self.FK_Kalemler_Daireler">
+            <End Role="Daireler" EntitySet="Daireler" />
+            <End Role="Kalemler" EntitySet="Kalemler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kalemler_Gorevliler" Association="Self.FK_Kalemler_Gorevliler">
+            <End Role="Gorevliler" EntitySet="Gorevliler" />
+            <End Role="Kalemler" EntitySet="Kalemler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kalemler_Mulkler" Association="Self.FK_Kalemler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulkler" />
+            <End Role="Kalemler" EntitySet="Kalemler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mulkler_Mulkler" Association="Self.FK_Mulkler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulkler" />
+            <End Role="Mulkler1" EntitySet="Mulkler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="YoneticimDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="YoneticimDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dairelers" EntityType="YoneticimDBModel.Daireler" />
+          <EntitySet Name="Gorevlilers" EntityType="YoneticimDBModel.Gorevliler" />
+          <EntitySet Name="GorevliTurleris" EntityType="YoneticimDBModel.GorevliTurleri" />
+          <EntitySet Name="Kalemlers" EntityType="YoneticimDBModel.Kalemler" />
+          <EntitySet Name="Mulklers" EntityType="YoneticimDBModel.Mulkler" />
+          <EntitySet Name="Yoneticilers" EntityType="YoneticimDBModel.Yoneticiler" />
+          <AssociationSet Name="FK_Daireler_Mulkler" Association="YoneticimDBModel.FK_Daireler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulklers" />
+            <End Role="Daireler" EntitySet="Dairelers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kalemler_Daireler" Association="YoneticimDBModel.FK_Kalemler_Daireler">
+            <End Role="Daireler" EntitySet="Dairelers" />
+            <End Role="Kalemler" EntitySet="Kalemlers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gorevliler_GorevliTurleri" Association="YoneticimDBModel.FK_Gorevliler_GorevliTurleri">
+            <End Role="GorevliTurleri" EntitySet="GorevliTurleris" />
+            <End Role="Gorevliler" EntitySet="Gorevlilers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gorevliler_Mulkler" Association="YoneticimDBModel.FK_Gorevliler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulklers" />
+            <End Role="Gorevliler" EntitySet="Gorevlilers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kalemler_Gorevliler" Association="YoneticimDBModel.FK_Kalemler_Gorevliler">
+            <End Role="Gorevliler" EntitySet="Gorevlilers" />
+            <End Role="Kalemler" EntitySet="Kalemlers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kalemler_Mulkler" Association="YoneticimDBModel.FK_Kalemler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulklers" />
+            <End Role="Kalemler" EntitySet="Kalemlers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mulkler_Mulkler" Association="YoneticimDBModel.FK_Mulkler_Mulkler">
+            <End Role="Mulkler" EntitySet="Mulklers" />
+            <End Role="Mulkler1" EntitySet="Mulklers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Daireler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="No" Type="Int32" Nullable="false" />
+          <Property Name="Kat" Type="Byte" />
+          <Property Name="SahibiAdi" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SahibiSoyadi" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SahibiTel" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="KiraciAdi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="KiraciSoyadi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="KiraciTel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MulkId" Type="Int32" Nullable="false" />
+          <Property Name="EPosta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Mulkler" Relationship="YoneticimDBModel.FK_Daireler_Mulkler" FromRole="Daireler" ToRole="Mulkler" />
+          <NavigationProperty Name="Kalemlers" Relationship="YoneticimDBModel.FK_Kalemler_Daireler" FromRole="Daireler" ToRole="Kalemler" />
+        </EntityType>
+        <EntityType Name="Gorevliler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Soyadi" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="IsTanimi" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Maasi" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="TcNo" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="SigortaNo" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="MulkId" Type="Int32" Nullable="false" />
+          <Property Name="GorevliTurId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GorevliTurleri" Relationship="YoneticimDBModel.FK_Gorevliler_GorevliTurleri" FromRole="Gorevliler" ToRole="GorevliTurleri" />
+          <NavigationProperty Name="Mulkler" Relationship="YoneticimDBModel.FK_Gorevliler_Mulkler" FromRole="Gorevliler" ToRole="Mulkler" />
+          <NavigationProperty Name="Kalemlers" Relationship="YoneticimDBModel.FK_Kalemler_Gorevliler" FromRole="Gorevliler" ToRole="Kalemler" />
+        </EntityType>
+        <EntityType Name="GorevliTurleri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Gorevlilers" Relationship="YoneticimDBModel.FK_Gorevliler_GorevliTurleri" FromRole="GorevliTurleri" ToRole="Gorevliler" />
+        </EntityType>
+        <EntityType Name="Kalemler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MulkId" Type="Int32" Nullable="false" />
+          <Property Name="GelirMi" Type="Boolean" Nullable="false" />
+          <Property Name="Tutar" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Açıklama" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Yıl" Type="Int32" Nullable="false" />
+          <Property Name="Ay" Type="Int32" Nullable="false" />
+          <Property Name="GorevliId" Type="Int32" />
+          <Property Name="AidatMi" Type="Boolean" Nullable="false" />
+          <Property Name="DaireId" Type="Int32" />
+          <NavigationProperty Name="Daireler" Relationship="YoneticimDBModel.FK_Kalemler_Daireler" FromRole="Kalemler" ToRole="Daireler" />
+          <NavigationProperty Name="Gorevliler" Relationship="YoneticimDBModel.FK_Kalemler_Gorevliler" FromRole="Kalemler" ToRole="Gorevliler" />
+          <NavigationProperty Name="Mulkler" Relationship="YoneticimDBModel.FK_Kalemler_Mulkler" FromRole="Kalemler" ToRole="Mulkler" />
+        </EntityType>
+        <EntityType Name="Mulkler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adres" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Adi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MulkId" Type="Int32" />
+          <Property Name="BlokSayisi" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dairelers" Relationship="YoneticimDBModel.FK_Daireler_Mulkler" FromRole="Mulkler" ToRole="Daireler" />
+          <NavigationProperty Name="Gorevlilers" Relationship="YoneticimDBModel.FK_Gorevliler_Mulkler" FromRole="Mulkler" ToRole="Gorevliler" />
+          <NavigationProperty Name="Kalemlers" Relationship="YoneticimDBModel.FK_Kalemler_Mulkler" FromRole="Mulkler" ToRole="Kalemler" />
+          <NavigationProperty Name="Mulkler1" Relationship="YoneticimDBModel.FK_Mulkler_Mulkler" FromRole="Mulkler" ToRole="Mulkler1" />
+          <NavigationProperty Name="Mulkler2" Relationship="YoneticimDBModel.FK_Mulkler_Mulkler" FromRole="Mulkler1" ToRole="Mulkler" />
+        </EntityType>
+        <EntityType Name="Yoneticiler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EPosta" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Daireler_Mulkler">
+          <End Type="YoneticimDBModel.Mulkler" Role="Mulkler" Multiplicity="1" />
+          <End Type="YoneticimDBModel.Daireler" Role="Daireler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Daireler">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kalemler_Daireler">
+          <End Type="YoneticimDBModel.Daireler" Role="Daireler" Multiplicity="0..1" />
+          <End Type="YoneticimDBModel.Kalemler" Role="Kalemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Daireler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kalemler">
+              <PropertyRef Name="DaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gorevliler_GorevliTurleri">
+          <End Type="YoneticimDBModel.GorevliTurleri" Role="GorevliTurleri" Multiplicity="1" />
+          <End Type="YoneticimDBModel.Gorevliler" Role="Gorevliler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GorevliTurleri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Gorevliler">
+              <PropertyRef Name="GorevliTurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gorevliler_Mulkler">
+          <End Type="YoneticimDBModel.Mulkler" Role="Mulkler" Multiplicity="1" />
+          <End Type="YoneticimDBModel.Gorevliler" Role="Gorevliler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Gorevliler">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kalemler_Gorevliler">
+          <End Type="YoneticimDBModel.Gorevliler" Role="Gorevliler" Multiplicity="0..1" />
+          <End Type="YoneticimDBModel.Kalemler" Role="Kalemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gorevliler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kalemler">
+              <PropertyRef Name="GorevliId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kalemler_Mulkler">
+          <End Type="YoneticimDBModel.Mulkler" Role="Mulkler" Multiplicity="1" />
+          <End Type="YoneticimDBModel.Kalemler" Role="Kalemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kalemler">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mulkler_Mulkler">
+          <End Type="YoneticimDBModel.Mulkler" Role="Mulkler" Multiplicity="0..1" />
+          <End Type="YoneticimDBModel.Mulkler" Role="Mulkler1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mulkler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mulkler1">
+              <PropertyRef Name="MulkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="YoneticimDBModelStoreContainer" CdmEntityContainer="YoneticimDBEntities">
+          <EntitySetMapping Name="Dairelers">
+            <EntityTypeMapping TypeName="YoneticimDBModel.Daireler">
+              <MappingFragment StoreEntitySet="Daireler">
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="EPosta" ColumnName="EPosta" />
+                <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+                <ScalarProperty Name="KiraciTel" ColumnName="KiraciTel" />
+                <ScalarProperty Name="KiraciSoyadi" ColumnName="KiraciSoyadi" />
+                <ScalarProperty Name="KiraciAdi" ColumnName="KiraciAdi" />
+                <ScalarProperty Name="SahibiTel" ColumnName="SahibiTel" />
+                <ScalarProperty Name="SahibiSoyadi" ColumnName="SahibiSoyadi" />
+                <ScalarProperty Name="SahibiAdi" ColumnName="SahibiAdi" />
+                <ScalarProperty Name="Kat" ColumnName="Kat" />
+                <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gorevlilers">
+            <EntityTypeMapping TypeName="YoneticimDBModel.Gorevliler">
+              <MappingFragment StoreEntitySet="Gorevliler">
+                <ScalarProperty Name="GorevliTurId" ColumnName="GorevliTurId" />
+                <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+                <ScalarProperty Name="SigortaNo" ColumnName="SigortaNo" />
+                <ScalarProperty Name="TcNo" ColumnName="TcNo" />
+                <ScalarProperty Name="Maasi" ColumnName="Maasi" />
+                <ScalarProperty Name="IsTanimi" ColumnName="IsTanimi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GorevliTurleris">
+            <EntityTypeMapping TypeName="YoneticimDBModel.GorevliTurleri">
+              <MappingFragment StoreEntitySet="GorevliTurleri">
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kalemlers">
+            <EntityTypeMapping TypeName="YoneticimDBModel.Kalemler">
+              <MappingFragment StoreEntitySet="Kalemler">
+                <ScalarProperty Name="DaireId" ColumnName="DaireId" />
+                <ScalarProperty Name="AidatMi" ColumnName="AidatMi" />
+                <ScalarProperty Name="GorevliId" ColumnName="GorevliId" />
+                <ScalarProperty Name="Ay" ColumnName="Ay" />
+                <ScalarProperty Name="Yıl" ColumnName="Yıl" />
+                <ScalarProperty Name="Açıklama" ColumnName="Açıklama" />
+                <ScalarProperty Name="Tutar" ColumnName="Tutar" />
+                <ScalarProperty Name="GelirMi" ColumnName="GelirMi" />
+                <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mulklers">
+            <EntityTypeMapping TypeName="YoneticimDBModel.Mulkler">
+              <MappingFragment StoreEntitySet="Mulkler">
+                <ScalarProperty Name="BlokSayisi" ColumnName="BlokSayisi" />
+                <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yoneticilers">
+            <EntityTypeMapping TypeName="YoneticimDBModel.Yoneticiler">
+              <MappingFragment StoreEntitySet="Yoneticiler">
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="EPosta" ColumnName="EPosta" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

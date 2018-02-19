@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="YoneticimDBModelStoreContainer" CdmEntityContainer="YoneticimDBEntities">
+    <EntitySetMapping Name="Dairelers">
+      <EntityTypeMapping TypeName="YoneticimDBModel.Daireler">
+        <MappingFragment StoreEntitySet="Daireler">
+          <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+          <ScalarProperty Name="EPosta" ColumnName="EPosta" />
+          <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+          <ScalarProperty Name="KiraciTel" ColumnName="KiraciTel" />
+          <ScalarProperty Name="KiraciSoyadi" ColumnName="KiraciSoyadi" />
+          <ScalarProperty Name="KiraciAdi" ColumnName="KiraciAdi" />
+          <ScalarProperty Name="SahibiTel" ColumnName="SahibiTel" />
+          <ScalarProperty Name="SahibiSoyadi" ColumnName="SahibiSoyadi" />
+          <ScalarProperty Name="SahibiAdi" ColumnName="SahibiAdi" />
+          <ScalarProperty Name="Kat" ColumnName="Kat" />
+          <ScalarProperty Name="No" ColumnName="No" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gorevlilers">
+      <EntityTypeMapping TypeName="YoneticimDBModel.Gorevliler">
+        <MappingFragment StoreEntitySet="Gorevliler">
+          <ScalarProperty Name="GorevliTurId" ColumnName="GorevliTurId" />
+          <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+          <ScalarProperty Name="SigortaNo" ColumnName="SigortaNo" />
+          <ScalarProperty Name="TcNo" ColumnName="TcNo" />
+          <ScalarProperty Name="Maasi" ColumnName="Maasi" />
+          <ScalarProperty Name="IsTanimi" ColumnName="IsTanimi" />
+          <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+          <ScalarProperty Name="Adi" ColumnName="Adi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GorevliTurleris">
+      <EntityTypeMapping TypeName="YoneticimDBModel.GorevliTurleri">
+        <MappingFragment StoreEntitySet="GorevliTurleri">
+          <ScalarProperty Name="Adi" ColumnName="Adi" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kalemlers">
+      <EntityTypeMapping TypeName="YoneticimDBModel.Kalemler">
+        <MappingFragment StoreEntitySet="Kalemler">
+          <ScalarProperty Name="DaireId" ColumnName="DaireId" />
+          <ScalarProperty Name="AidatMi" ColumnName="AidatMi" />
+          <ScalarProperty Name="GorevliId" ColumnName="GorevliId" />
+          <ScalarProperty Name="Ay" ColumnName="Ay" />
+          <ScalarProperty Name="Yıl" ColumnName="Yıl" />
+          <ScalarProperty Name="Açıklama" ColumnName="Açıklama" />
+          <ScalarProperty Name="Tutar" ColumnName="Tutar" />
+          <ScalarProperty Name="GelirMi" ColumnName="GelirMi" />
+          <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mulklers">
+      <EntityTypeMapping TypeName="YoneticimDBModel.Mulkler">
+        <MappingFragment StoreEntitySet="Mulkler">
+          <ScalarProperty Name="BlokSayisi" ColumnName="BlokSayisi" />
+          <ScalarProperty Name="MulkId" ColumnName="MulkId" />
+          <ScalarProperty Name="Adi" ColumnName="Adi" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Yoneticilers">
+      <EntityTypeMapping TypeName="YoneticimDBModel.Yoneticiler">
+        <MappingFragment StoreEntitySet="Yoneticiler">
+          <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+          <ScalarProperty Name="EPosta" ColumnName="EPosta" />
+          <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+          <ScalarProperty Name="Ad" ColumnName="Ad" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,293 @@
+﻿@model List<Mulk>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Mulk site = ViewBag.Mulk as Mulk;
+}
+
+@section newmenu
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-plus"></span> Yeni <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a data-title="modalNewBlock" data-toggle="modal" data-target="#modalNewBlock">Bina</a></li>
+            <li><a href="/Staff/Add?mulkid=@ViewContext.RouteData.Values["id"].ToString()">Görevli</a></li>
+        </ul>
+    </li>
+}
+
+<div class="container">
+    <h2><b>Site Detayları</b></h2>
+    <hr />
+
+    <div class="row">
+        <!-- Boxes de Acoes -->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="box">
+                <div class="icon">
+                    <div class="image"><i class="fa fa-thumbs-o-up"></i></div>
+                    <div class="info">
+                        <h3 class="title">Ödenen Aidat</h3>
+                        <div>
+                            <h1><b>15.258 ₺</b></h1>
+                        </div>
+                        <div class="more">
+                            <a href="#" title="Title Link">
+                                Göster <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="space"></div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="box">
+                <div class="icon">
+                    <div class="image red"><i class="fa fa-thumbs-o-down"></i></div>
+                    <div class="info red">
+                        <h3 class="title">Ödenmeyen Aidat</h3>
+                        <div>
+                            <h1><b>21.435 ₺</b></h1>
+                        </div>
+                        <div class="more">
+                            <a href="#" title="Title Link">
+                                Göster <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="space"></div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="box">
+                <div class="icon">
+                    <div class="image"><i class="fa fa-money"></i></div>
+                    <div class="info">
+                        <h3 class="title">Ekstra Gelir</h3>
+                        <div>
+                            <h1><b>33.120 ₺</b></h1>
+                        </div>
+                        <div class="more">
+                            <a href="#" title="Title Link">
+                                Göster <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="space"></div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="box">
+                <div class="icon">
+                    <div class="image red"><i class="fa fa-money"></i></div>
+                    <div class="info red">
+                        <h3 class="title">Giderler</h3>
+                        <div>
+                            <h1><b>28.560 ₺</b></h1>
+                        </div>
+                        <div class="more">
+                            <a href="#" title="Title Link">
+                                Göster <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="space"></div>
+            </div>
+        </div>
+        <!-- /Boxes de Acoes -->
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Site Adı : </b>@site.Adi</li>
+                <li class="list-group-item"><b>Adres : </b>@site.Adres</li>
+                <li class="list-group-item"><b>Blok-Daire Sayısı : </b>@site.BlokSayisi - @site.Mulkleri.Sum(x => x.Daireler.Count)</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <b>Kapıcı Sayısı : </b>
+                    @Html.ActionLink(site.Gorevliler.Count(x => x.GorevliTurleriId == 1).ToString(),
+                    "List", "Staff", new { mulkid = site.Id, gorevliTurId = 1 }, null)
+                </li>
+
+                <li class="list-group-item">
+                    <b>Temizlikçi Sayısı : </b>
+                    @Html.ActionLink(site.Gorevliler.Count(x => x.GorevliTurleriId == 2).ToString(),
+                    "List", "Staff", new { mulkid = site.Id, gorevliTurId = 2 }, null)
+                </li>
+
+                <li class="list-group-item">
+                    <b>Güvenlik Sayısı : </b>
+                    @Html.ActionLink(site.Gorevliler.Count(x => x.GorevliTurleriId == 3).ToString(),
+                    "List", "Staff", new { mulkid = site.Id, gorevliTurId = 3 }, null)
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <hr />
+        </div>
+        <div class="col-md-12">
+            <h3><b>Bloklar</b></h3>
+            <hr />
+            <div class="table-responsive col-md-12">
+
+                @Html.Grid(Model).Columns(col =>
+           {
+               col.Add(x => x.Id, true);
+               col.Add(x => x.Adi).Titled("Blok Adı");
+               col.Add().RenderValueAs(x => x.Daireler.Count.ToString()).Titled("Daire Sayısı");
+               col.Add().RenderValueAs(x => x.Gorevliler.Count.ToString()).Titled("Görevli Sayısı");
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Details", "Details", "Block", new { id = x.Id }, new { @class = "btn btn-info btn-sm" }));
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Edit", "Edit", new { id = x.Id }, new { @class = "btn btn-warning btn-sm", data_toggle = "modal", data_target = "#edit" }));
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Del", "Delete", new { id = x.Id }, new { @class = "btn btn-danger btn-sm", data_toggle = "modal", data_target = "#delete" }));
+
+           }).WithPaging(5).SetLanguage("tr").Sortable(true).EmptyText("Kayıtlı bina bulunmamaktadır.")
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input class="form-control " type="text" placeholder="Mohsin">
+                    </div>
+                    <div class="form-group">
+
+                        <input class="form-control " type="text" placeholder="Irshad">
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div>
+
+<link href="~/Content/details.css" rel="stylesheet" />
+
+
+<div class="modal fade" id="modalNewBlock" tabindex="-1" role="dialog" aria-labelledby="modalNewBlock" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Add New Block</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="BlockName" class="control-label col-xs-4">Bina Adı</label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" id="BlockName" placeholder="Bina Adı">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer ">
+                <button id="btnAddBlock" type="button" class="btn btn-success btn-lg" data-dismiss="modal" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script>
+
+    $(function () {
+
+        $("#btnAddBlock").click(function () {
+
+            var blockName = $("#BlockName").val();
+            var address = $("#Address").val();
+
+            var obj = {
+                "Adi": blockName,
+                "Adres": address,
+                "MulkId": @ViewContext.RouteData.Values["id"].ToString()
+            };
+
+            $.ajax({
+                url: "/Block/Add",
+                method: "POST",
+                data: obj,
+                dataType: "json"
+            }).done(function (result) {
+
+                if (result.hasError !== undefined) {
+                    if (result.hasError === true) {
+                        alert(result.message);
+                    }
+                }
+
+                location.reload();
+
+            });
+
+        });
+
+    });
+
+</script>

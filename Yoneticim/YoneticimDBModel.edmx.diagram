@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fcbc86d94c7d4238bd585f3fd8720d0b" Name="Diagram1">
+        <EntityTypeShape EntityType="YoneticimDBModel.Daireler" Width="1.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="YoneticimDBModel.Gorevliler" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="YoneticimDBModel.GorevliTurleri" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YoneticimDBModel.Kalemler" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="YoneticimDBModel.Mulkler" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="YoneticimDBModel.Yoneticiler" Width="1.5" PointX="5.75" PointY="1.25" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Daireler_Mulkler" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Kalemler_Daireler" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Gorevliler_GorevliTurleri" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Gorevliler_Mulkler" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Kalemler_Gorevliler" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Kalemler_Mulkler" />
+        <AssociationConnector Association="YoneticimDBModel.FK_Mulkler_Mulkler" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

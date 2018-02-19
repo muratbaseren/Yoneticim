@@ -1,0 +1,108 @@
+﻿@model List<Gorevli>
+@{
+    ViewBag.Title = "Görevli Listesi";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section newmenu
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-plus"></span> Yeni <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="/Staff/Add?mulkid=@Request.QueryString["mulkid"].ToString()">Görevli</a></li>
+        </ul>
+    </li>
+}
+
+<div class="row">
+
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <h3><b>Görevliler</b></h3>
+            <hr />
+
+            <div class="text-left">
+                <a href="/Staff/List?mulkid=@Request.QueryString["mulkid"].ToString()" class="btn btn-info">Tüm Görevliler</a>
+                <br /><br />
+            </div>
+
+            <div class="table-responsive col-md-12">
+
+                @Html.Grid(Model).Columns(col =>
+           {
+               col.Add(x => x.Id, true);
+               col.Add(x => x.Adi).Titled("Görevli Adı").Filterable(true);
+               col.Add(x => x.Soyadi).Titled("Görevli Soyadı").Filterable(true);
+               col.Add(x => x.TcNo).Titled("TC No").Filterable(true);
+               col.Add(x => x.SigortaNo).Titled("Sigorta No").Filterable(true);
+               col.Add(x => x.Maasi).Titled("Maaşı").Filterable(true);
+               col.Add(x => x.GorevliTurleri.Adi).Titled("Görev Türü").Filterable(true);
+               col.Add(x => x.IsTanimi).Titled("İş Tanımı").Filterable(true);
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Kalemler", "Kalemler", new { id = x.Id }, new { @class = "btn btn-info btn-sm" }));
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Düzenle", "Edit", new { id = x.Id }, new { @class = "btn btn-warning btn-sm" }));
+
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => Html.ActionLink("Sil", "Delete", null, new { @class = "btn btn-danger btn-sm", data_toggle = "modal", data_target = "#delete", data_uri = Url.Action("Delete", "Staff", new { id = x.Id }), data_staff_id = x.Id, href = string.Empty }));
+
+           }).WithPaging(5).SetLanguage("tr").Sortable(true).EmptyText("Kayıtlı görevli bulunmamaktadır.")
+
+            </div>
+
+        </div>
+
+        <div class="col-md-12 text-left">
+            <br /><br />
+            <a href="/Block/Details/@Request.QueryString["mulkid"].ToString()" class="btn btn-default">Geri Dön!</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?
+                </div>
+
+                <form id="deleteStaffForm" action="/Staff/Delete" method="post">
+                    <input id="StaffId" name="StaffId" type="hidden" />
+                </form>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" onclick="btnDeleteStaff_Click();">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Yes
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script>
+    $(function () {
+        $("#delete").on("shown.bs.modal", function (e) {
+            var btn = $(e.relatedTarget);
+            var staffId = btn.data("staff-id");
+
+            $("#delete").find("#StaffId").val(staffId);
+        });
+    })
+
+    function btnDeleteStaff_Click() {
+        $("#deleteStaffForm").submit();
+    }
+</script>
